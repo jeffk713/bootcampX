@@ -22,10 +22,10 @@ FROM teachers t
 JOIN assistance_requests ar ON t.id = ar.teacher_id
 JOIN students s ON s.id = ar.student_id
 JOIN cohorts c ON c.id = s.cohort_id
-WHERE c.name = '${cohortName}'
+WHERE c.name LIKE $1
 ORDER BY instructor`;
 
-client.query(queryString).then(res => {
+client.query(queryString, [`%${cohortName}%`]).then(res => {
   res.rows.forEach(row => {
     console.log(`${row.cohort}: ${row.instructor}`);
   });

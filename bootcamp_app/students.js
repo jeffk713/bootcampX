@@ -19,7 +19,7 @@ const limitValue = process.argv[3];
 
 client
   .query(
-    `SELECT s.id, s.name as student_name, c.name as cohort_name FROM students s JOIN cohorts c ON c.id = s.cohort_id WHERE c.name LIKE '%${cohortName}%' LIMIT ${limitValue};`
+    `SELECT s.id, s.name as student_name, c.name as cohort_name FROM students s JOIN cohorts c ON c.id = s.cohort_id WHERE c.name LIKE $1 LIMIT $2;`, [`%${cohortName}%`, `${limitValue}`]
   )
   .then(res => {
     res.rows.forEach(user => {
